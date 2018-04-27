@@ -1,6 +1,6 @@
 import Foundation
 
-class QXDevice {
+class Device {
     
     var friendlyName:NSString?
     

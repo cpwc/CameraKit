@@ -1,7 +1,7 @@
-# QXCameraKit
+# CameraKit
 
-swift API library for Sony QX camera
-this library provides API wrapper to connect to Sony QX Camera easily.
+swift API library for Sony  camera
+this library provides API wrapper to connect to Sony  Camera easily.
 
 this library is originally based on Camera Remote API beta SDK from Sony
 http://www.sony.net/Products/di/en-gb/products/ec8t/
@@ -15,16 +15,16 @@ http://instagram.com/p/txmivXPIm7/
 ### Examples
 
 please check this sample app
-https://github.com/akirahrkw/SampleQXCameraKit
+https://github.com/akirahrkw/SampleCameraKit
 
 ### Using blocks
 
 ```swift
-import QXCameraKit
+import CameraKit
 
 ...
 
-manager = QXAPIManager()
+manager = APIManager()
 manager.openConnection({[unowned self] (result:Bool, error:NSError?) -> () in
     if(result) {
         manager.startLiveImage({ [unowned self] (image:UIImage, error:NSError?) -> () in

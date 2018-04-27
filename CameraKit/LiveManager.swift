@@ -1,6 +1,6 @@
 import UIKit
 
-public class QXLiveManager: NSObject {
+public class LiveManager: NSObject {
 
     var isStarted:Bool
     

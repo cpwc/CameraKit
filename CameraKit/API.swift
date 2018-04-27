@@ -2,7 +2,7 @@ import Foundation
 
 public typealias APIResponseClosure = (json:NSDictionary, isSucceeded:Bool) -> ()
 
-public enum QXAPIList: NSString {
+public enum APIList: NSString {
     
     // server information
     case GetAvailableApiList = "getAvailableApiList"
@@ -69,261 +69,261 @@ public enum QXAPIList: NSString {
     case GetAvailableBeepMode = "getAvailableBeepMode"
 }
 
-public class QXAPI {
+public class API {
 
-    var device:QXDevice
+    var device:Device
     
-    var qxid:Int
+    var id:Int
     
-    init(device:QXDevice) {
+    init(device:Device) {
         self.device = device
-        self.qxid = 1
+        self.id = 1
     }
     
     // MARK: - serverinformation methods
     public func getAvailableApiList() -> NSData? {
         var url = self.device.findActionListUrl("camera")
-        var params = self.createRequestJson(QXAPIList.GetAvailableApiList)
+        var params = self.createRequestJson(APIList.GetAvailableApiList)
         return self.call(url, postParams:params)
     }
     
     public func getApplicationInfo() -> NSData? {
         var url = self.device.findActionListUrl("camera")
-        var params = self.createRequestJson(QXAPIList.GetApplicationInfo)
+        var params = self.createRequestJson(APIList.GetApplicationInfo)
         return self.call(url, postParams:params)
     }
     
     public func getVersions() -> NSData? {
         var url = self.device.findActionListUrl("camera")
-        var params = self.createRequestJson(QXAPIList.GetVersions)
+        var params = self.createRequestJson(APIList.GetVersions)
         return self.call(url, postParams:params)
     }
 
     public func getMethodTypes(version:NSString, closure:APIResponseClosure) {
         var params = "[\"\(version)\"]"
-        createPostRequest(QXAPIList.GetMethodTypes, params:params, closure:closure)
+        createPostRequest(APIList.GetMethodTypes, params:params, closure:closure)
     }
 
     public func getEvent(longPolling:Bool, closure:APIResponseClosure) {
         var param = longPolling ? "true" : "false"
         var params = "[\(param)]"
-        createPostRequest(QXAPIList.GetEvent, params:params, closure:closure)
+        createPostRequest(APIList.GetEvent, params:params, closure:closure)
     }
 
     // MARK: - Zoom methods
     public func startZoomIn(closure:APIResponseClosure) {
         var params = "[\"in\",\"start\"]"
-        createPostRequest(QXAPIList.ActZoom, params:params, closure:closure)
+        createPostRequest(APIList.ActZoom, params:params, closure:closure)
     }
 
     public func stopZoomIn(closure:APIResponseClosure) {
         var params = "[\"in\",\"stop\"]"
-        createPostRequest(QXAPIList.ActZoom, params:params, closure:closure)
+        createPostRequest(APIList.ActZoom, params:params, closure:closure)
     }
 
     public func startZoomOut(closure:APIResponseClosure) {
         var params = "[\"out\",\"start\"]"
-        createPostRequest(QXAPIList.ActZoom, params:params, closure:closure)
+        createPostRequest(APIList.ActZoom, params:params, closure:closure)
     }
     
     public func stopZoomOut(closure:APIResponseClosure) {
         var params = "[\"out\",\"stop\"]"
-        createPostRequest(QXAPIList.ActZoom, params:params, closure:closure)
+        createPostRequest(APIList.ActZoom, params:params, closure:closure)
     }
 
     // MARK: - StillSize methods
     public func getSupportedStillSize(closure:APIResponseClosure) {
-        createGetRequest(QXAPIList.GetSupportedStillSize, closure:closure)
+        createGetRequest(APIList.GetSupportedStillSize, closure:closure)
     }
 
     public func getAvailableStillSize(closure:APIResponseClosure) {
-        createGetRequest(QXAPIList.GetAvailableStillSize, closure:closure)
+        createGetRequest(APIList.GetAvailableStillSize, closure:closure)
     }
     
     public func getStillSize(closure:APIResponseClosure) {
-        createGetRequest(QXAPIList.GetStillSize, closure:closure)
+        createGetRequest(APIList.GetStillSize, closure:closure)
     }
 
     public func setStillSize(aspect:NSString, size:NSString, closure:APIResponseClosure) {
         var params = "[\"\(aspect)\",\"\(size)\"]"
-        createPostRequest(QXAPIList.SetStillSize, params:params, closure:closure)
+        createPostRequest(APIList.SetStillSize, params:params, closure:closure)
     }
 
     // MARK: - PostView methods
     public func getSupportedPostviewImageSize(closure:APIResponseClosure) {
-        createGetRequest(QXAPIList.GetSupportedPostviewImageSize, closure:closure)
+        createGetRequest(APIList.GetSupportedPostviewImageSize, closure:closure)
     }
     
     public func getAvailablePostviewImageSize(closure:APIResponseClosure) {
-        createGetRequest(QXAPIList.GetAvailablePostviewImageSize, closure:closure)
+        createGetRequest(APIList.GetAvailablePostviewImageSize, closure:closure)
     }
     
     public func getPostviewImageSize(closure:APIResponseClosure) {
-        createGetRequest(QXAPIList.GetPostviewImageSize, closure:closure)
+        createGetRequest(APIList.GetPostviewImageSize, closure:closure)
     }
     
     public func setPostviewImageSize(size:NSString, closure:APIResponseClosure) {
         var params = "[\"\(size)\"]"
-        createPostRequest(QXAPIList.SetPostviewImageSize, params:params, closure:closure)
+        createPostRequest(APIList.SetPostviewImageSize, params:params, closure:closure)
     }
 
     // MARK: - StillCapture methods
     public func actTakePicture(closure:APIResponseClosure) {
-        createGetRequest(QXAPIList.ActTakePicture, closure:closure)
+        createGetRequest(APIList.ActTakePicture, closure:closure)
     }
   
     // MARK: - HalfPress methods
     public func actHalfPressShutter(closure:APIResponseClosure) {
-        createGetRequest(QXAPIList.ActHalfPressShutter, closure:closure)
+        createGetRequest(APIList.ActHalfPressShutter, closure:closure)
     }
 
     public func cancelHalfPressShutter(closure:APIResponseClosure) {
-        createGetRequest(QXAPIList.CancelHalfPressShutter, closure:closure)
+        createGetRequest(APIList.CancelHalfPressShutter, closure:closure)
     }
     
     // MARK: - TouchAF methods
     public func setTouchAFPosition(x:CGFloat, y:CGFloat, closure:APIResponseClosure) {
         var params = "[\(x), \(y)]"
-        createPostRequest(QXAPIList.SetTouchAfPosition, params:params, closure:closure)
+        createPostRequest(APIList.SetTouchAfPosition, params:params, closure:closure)
     }
     
     public func getTouchAFPosition(closure:APIResponseClosure) {
-        createGetRequest(QXAPIList.GetTouchAfPosition, closure:closure)
+        createGetRequest(APIList.GetTouchAfPosition, closure:closure)
     }
 
     public func cancelTouchAFPosition(closure:APIResponseClosure) {
-        createGetRequest(QXAPIList.CancelTouchAfPosition, closure:closure)
+        createGetRequest(APIList.CancelTouchAfPosition, closure:closure)
     }
     
     // MARK: - ExposureMode methods
     public func getSupportedExposureMode(closure:APIResponseClosure) {
-        createGetRequest(QXAPIList.GetSupportedExposureMode, closure:closure)
+        createGetRequest(APIList.GetSupportedExposureMode, closure:closure)
     }
     
     public func getAvailableExposureMode(closure:APIResponseClosure) {
-        createGetRequest(QXAPIList.GetAvailableExposureMode, closure:closure)
+        createGetRequest(APIList.GetAvailableExposureMode, closure:closure)
     }
     
     public func getExposureMode(closure:APIResponseClosure) {
-        createGetRequest(QXAPIList.GetExposureMode, closure:closure)
+        createGetRequest(APIList.GetExposureMode, closure:closure)
     }
     
     public func setExposureMode(mode:NSString, closure:APIResponseClosure) {
         var params = "[\"\(mode)\"]"
-        createPostRequest(QXAPIList.SetExposureMode, params:params, closure:closure)
+        createPostRequest(APIList.SetExposureMode, params:params, closure:closure)
     }
     
     // MARK: - IsoSpeedRate methods
     public func getSupportedIsoSpeedRate(closure:APIResponseClosure) {
-        createGetRequest(QXAPIList.GetSupportedIsoSpeedRate, closure:closure)
+        createGetRequest(APIList.GetSupportedIsoSpeedRate, closure:closure)
     }
     
     public func getAvailableIsoSpeedRate(closure:APIResponseClosure) {
-        createGetRequest(QXAPIList.GetAvailableIsoSpeedRate, closure:closure)
+        createGetRequest(APIList.GetAvailableIsoSpeedRate, closure:closure)
     }
     
     public func getIsoSpeedRate(closure:APIResponseClosure) {
-        createGetRequest(QXAPIList.GetIsoSpeedRate, closure:closure)
+        createGetRequest(APIList.GetIsoSpeedRate, closure:closure)
     }
     
     public func setIsoSpeedRate(rate:NSString, closure:APIResponseClosure) {
         var params = "[\"\(rate)\"]"
-        createPostRequest(QXAPIList.SetIsoSpeedRate, params:params, closure:closure)
+        createPostRequest(APIList.SetIsoSpeedRate, params:params, closure:closure)
     }
 
     // MARK: - WhiteBalance methods
     public func getSupportedWhiteBalance(closure:APIResponseClosure) {
-        createGetRequest(QXAPIList.GetSupportedWhiteBalance, closure:closure)
+        createGetRequest(APIList.GetSupportedWhiteBalance, closure:closure)
     }
     
     public func getAvailableWhiteBalance(closure:APIResponseClosure) {
-        createGetRequest(QXAPIList.GetAvailableWhiteBalance, closure:closure)
+        createGetRequest(APIList.GetAvailableWhiteBalance, closure:closure)
     }
     
     public func getWhiteBalance(closure:APIResponseClosure) {
-        createGetRequest(QXAPIList.GetWhiteBalance, closure:closure)
+        createGetRequest(APIList.GetWhiteBalance, closure:closure)
     }
     
     public func setWhiteBalance(balance:NSString, closure:APIResponseClosure) {
         var params = "[\"\(balance)\"]"
-        createPostRequest(QXAPIList.SetWhiteBalance, params:params, closure:closure)
+        createPostRequest(APIList.SetWhiteBalance, params:params, closure:closure)
     }
 
     // MARK: - Shoot methods
     public func getSupportedShootMode(closure:APIResponseClosure) {
-        createGetRequest(QXAPIList.GetSupportedShootMode, closure:closure)
+        createGetRequest(APIList.GetSupportedShootMode, closure:closure)
     }
     
     public func getAvailableShootMode(closure:APIResponseClosure) {
-        createGetRequest(QXAPIList.GetAvailableShootMode, closure:closure)
+        createGetRequest(APIList.GetAvailableShootMode, closure:closure)
     }
     
     public func getShootMode(closure:APIResponseClosure) {
-        createGetRequest(QXAPIList.GetShootMode, closure:closure)
+        createGetRequest(APIList.GetShootMode, closure:closure)
     }
     
     public func setShootMode(mode:NSString, closure:APIResponseClosure) {
         var params = "[\"\(mode)\"]"
-        createPostRequest(QXAPIList.SetShootMode, params:params, closure:closure)
+        createPostRequest(APIList.SetShootMode, params:params, closure:closure)
     }
     
     // MARK: - LiveView methods
     public func startLiveView() -> NSData {
         var url = self.device.findActionListUrl("camera")
-        var params = self.createRequestJson(QXAPIList.StartLiveview)
+        var params = self.createRequestJson(APIList.StartLiveview)
         return self.call(url, postParams:params)
     }
 
     public func stopLiveView() -> NSData {
         var url = self.device.findActionListUrl("camera")
-        var params = self.createRequestJson(QXAPIList.StopLiveview)
+        var params = self.createRequestJson(APIList.StopLiveview)
         return self.call(url, postParams:params)
     }
 
     // MARK: - BeepMode methods
     public func getSupportedBeepMode(closure:APIResponseClosure) {
-        createGetRequest(QXAPIList.GetSupportedBeepMode, closure:closure)
+        createGetRequest(APIList.GetSupportedBeepMode, closure:closure)
     }
     
     public func getAvailableBeepMode(closure:APIResponseClosure) {
-        createGetRequest(QXAPIList.GetAvailableBeepMode, closure:closure)
+        createGetRequest(APIList.GetAvailableBeepMode, closure:closure)
     }
     
     public func getBeepMode(closure:APIResponseClosure) {
-        createGetRequest(QXAPIList.GetBeepMode, closure:closure)
+        createGetRequest(APIList.GetBeepMode, closure:closure)
     }
 
     public func setBeepMode(mode:NSString, closure:APIResponseClosure) {
         var params = "[\"\(mode)\"]"
-        createPostRequest(QXAPIList.SetBeepMode, params:params, closure:closure)
+        createPostRequest(APIList.SetBeepMode, params:params, closure:closure)
     }
 
     // MARK: - Private methods
     func getId() -> Int {
-        return self.qxid++
+        return self.id++
     }
     
-    func createGetRequest(api:QXAPIList, closure:APIResponseClosure) {
+    func createGetRequest(api:APIList, closure:APIResponseClosure) {
         var params = self.createRequestJson(api)
         self.createAsynchronousRequest(api, params:params, closure:closure)
     }
 
-    func createPostRequest(api:QXAPIList, params:NSString, closure:APIResponseClosure) {
+    func createPostRequest(api:APIList, params:NSString, closure:APIResponseClosure) {
         var params = self.createRequestJson(api, params:params)
         self.createAsynchronousRequest(api, params:params, closure:closure)
     }
     
-    func createAsynchronousRequest(api:QXAPIList, params:NSString, closure:APIResponseClosure) {
+    func createAsynchronousRequest(api:APIList, params:NSString, closure:APIResponseClosure) {
         var url = self.device.findActionListUrl("camera")
         var request = HttpAsynchronousRequest(url:url, postParams:params, apiName:api.rawValue, closure:closure)
         request.execute()
     }
     
-    func createRequestJson(method:QXAPIList) -> NSString {
+    func createRequestJson(method:APIList) -> NSString {
         return self.createRequestJson(method, params:"[]")
     }
 
-    func createRequestJson(method:QXAPIList, params:NSString) -> NSString {
+    func createRequestJson(method:APIList, params:NSString) -> NSString {
         var version = "1.0"
         var json = NSString(format:"{ \"method\":\"%@\",\"params\":%@,\"version\":\"%@\",\"id\":%d }", method.rawValue, params, version, self.getId())
         return json

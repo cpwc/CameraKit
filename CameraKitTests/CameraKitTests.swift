@@ -1,6 +1,6 @@
 //
-//  QXCameraKitTests.swift
-//  QXCameraKitTests
+//  CameraKitTests.swift
+//  CameraKitTests
 //
 //  Created by Hirakawa Akira on 10/11/14.
 //  Copyright (c) 2014 Akira Hirakawa. All rights reserved.
@@ -9,7 +9,7 @@
 import UIKit
 import XCTest
 
-class QXCameraKitTests: XCTestCase {
+class CameraKitTests: XCTestCase {
     
     override func setUp() {
         super.setUp()

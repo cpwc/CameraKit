@@ -3,11 +3,11 @@
 
 source 'https://github.com/CocoaPods/Specs.git'
 
-target "QXCameraKit" do
+target "CameraKit" do
 
 end
 
-target "QXCameraKitTests" do
+target "CameraKitTests" do
 
 end
 

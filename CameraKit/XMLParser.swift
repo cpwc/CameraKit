@@ -1,6 +1,6 @@
 import Foundation
 
-class QXXMLParser: NSObject, NSXMLParserDelegate {
+class XMLParser: NSObject, NSXMLParserDelegate {
     
     var devices:NSMutableArray
     
@@ -14,7 +14,7 @@ class QXXMLParser: NSObject, NSXMLParserDelegate {
     
     var closure:((devices:NSArray) -> ())?
     
-    var device:QXDevice?
+    var device:Device?
     
     var currentServiceName:NSString?
     
@@ -51,7 +51,7 @@ class QXXMLParser: NSObject, NSXMLParserDelegate {
     func parser(parser:NSXMLParser!, didStartElement elementName:String!, namespaceURI:String!, qualifiedName qName:String!, attributes attributeDict: [NSObject : AnyObject]!) {
         
         if(elementName == "device") {
-            self.device = QXDevice()
+            self.device = Device()
             self.isCameraDevice = false
         }
         else if(elementName == "friendlyName") {

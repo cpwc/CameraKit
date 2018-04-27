@@ -1,10 +1,10 @@
 import UIKit
 
-public class QXAPIManager: NSObject {
+public class APIManager: NSObject {
    
-    public var api:QXAPI?
+    public var api:API?
 
-    public var liveManager:QXLiveManager
+    public var liveManager:LiveManager
     
     public var isCameraIdle:Bool
 
@@ -15,7 +15,7 @@ public class QXAPIManager: NSObject {
     public var fetchImageClosure:((image:UIImage, error:NSError) -> ())?
     
     override public init() {
-        self.liveManager = QXLiveManager()
+        self.liveManager = LiveManager()
         self.isCameraIdle = true
         self.isSupportedVersion = false
         super.init()
@@ -25,7 +25,7 @@ public class QXAPIManager: NSObject {
     public func startLiveImage(closure:(image:UIImage, error:NSError?) -> ()) -> Bool {
         self.fetchImageClosure = closure
         
-        if(!self.isApiAvailable(QXAPIList.StartLiveview)) {
+        if(!self.isApiAvailable(APIList.StartLiveview)) {
             return false
         }
         
@@ -52,7 +52,7 @@ public class QXAPIManager: NSObject {
             if(devices != nil && devices!.count != 0) {
                 
                 //use first device
-                self.api = QXAPI(device:devices!.firstObject as QXDevice)
+                self.api = API(device:devices!.firstObject as Device)
                 var result = self.getInformation()
                 
                 if(result) {
@@ -69,14 +69,14 @@ public class QXAPIManager: NSObject {
         })
     }
     
-    // find available device by parsing XML file from QX Camera
+    // find available device by parsing XML file from  Camera
     public func discoveryDevices(closure:(devices:NSArray?, error:NSError?) -> ()) {
         
         var request:UdpRequest = UdpRequest()
         request.execute({[unowned self] (ddUrl:String!, uuId:[AnyObject]!) -> () in
 
             if(ddUrl != nil) {
-                var parser = QXXMLParser()
+                var parser = XMLParser()
             
                 parser.execute(ddUrl, closure:{[unowned self] (devices:NSArray) -> () in
                     
@@ -111,7 +111,7 @@ public class QXAPIManager: NSObject {
         self.apiList = result![0] as? NSArray;
         
         // get application info
-        if(!self.isApiAvailable(QXAPIList.GetApplicationInfo)) {
+        if(!self.isApiAvailable(APIList.GetApplicationInfo)) {
             return false
         }
         response = self.api?.getApplicationInfo()
@@ -204,7 +204,7 @@ public class QXAPIManager: NSObject {
         return resultArray
     }
     
-    public func isApiAvailable(api:QXAPIList) -> Bool {
+    public func isApiAvailable(api:APIList) -> Bool {
         if(self.apiList != nil && self.apiList!.count > 0 && self.apiList!.containsObject(api.rawValue)) {
             return true
         } else {
@@ -228,7 +228,7 @@ public class QXAPIManager: NSObject {
     }
     
     public func createError(message:NSString) -> NSError {
-        var error = NSError(domain:"com.qxcamera", code:35, userInfo:[NSLocalizedDescriptionKey:message])
+        var error = NSError(domain:"com.camera", code:35, userInfo:[NSLocalizedDescriptionKey:message])
         return error
     }
     
